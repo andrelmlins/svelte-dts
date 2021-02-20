@@ -5,7 +5,9 @@
 Dts generator for svelte with typescript. These are the main characteristics of this library:
 
 ✨ CLI(Command-line interface)
+<br />
 ✨ Rollup plugin
+<br />
 ✨ Transpile typescript in the svelte file
 
 ## Installation
