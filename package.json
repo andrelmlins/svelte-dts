@@ -1,11 +1,28 @@
 {
   "name": "svelte-dts",
-  "version": "1.0.0",
-  "main": "index.js",
+  "description": "Dts generator for svelte with typescript",
+  "main": "dist/index.js",
+  "version": "0.1.0",
   "license": "MIT",
+  "homepage": "https://github.com/andrelmlins/svelte-dts",
+  "repository": "https://github.com/andrelmlins/svelte-dts",
+  "author": "André Lins <andrelucas01@hotmail.com> (https://andrelmlins.github.io/)",
   "scripts": {
     "build": "tsc -p ."
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "bugs": {
+    "url": "https://github.com/andrelmlins/svelte-dts/issues"
+  },
+  "keywords": [
+    "svelte",
+    "dts",
+    "typescript",
+    "generator"
+  ],
   "dependencies": {
     "recursive-readdir": "^2.2.2"
   },
