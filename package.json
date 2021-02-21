@@ -11,6 +11,9 @@
     "build": "tsc -p .",
     "types": "npm-dts generate -o ./dist/index.d.ts -L error"
   },
+  "bin": {
+    "whatsup": "./bin/svelte-dts"
+  },
   "files": [
     "dist",
     "README.md"
@@ -25,6 +28,7 @@
     "generator"
   ],
   "dependencies": {
+    "commander": "^7.1.0",
     "recursive-readdir": "^2.2.2"
   },
   "devDependencies": {
