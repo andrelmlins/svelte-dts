@@ -14,11 +14,7 @@ Typescript declaration generator for svelte with typescript. Create the declarat
 
 The `svelte-dts` interpret the properties, events and slot properties in the svelte code, using typescript and svelte compiler. The `svelte-dts` too interpret typescript and declaration typescript code, and create default declarations for javascript code.
 
-Observe the code of the `click-counter-clicked` library that has the `ClickCounterButton` component, and next to the generated typescript declarations.
-
-<table>
-<tr>
-<td>
+Observe the code of the `click-counter-clicked` library that has the `ClickCounterButton` component:
 
 ```html
 <script lang="ts">
@@ -36,8 +32,7 @@ $: dispatch('change', number);
 
 ```
 
-</td>
-<td>
+The result is the generated typescript declarations. Please note below:
 
 ```ts
 import { SvelteComponentTyped } from 'svelte';
@@ -52,9 +47,6 @@ declare module 'click-counter-button' {
   export default ClickCounterButton;
 }
 ```
-
-</td>
-</tr>
 
 ## Installation
 
