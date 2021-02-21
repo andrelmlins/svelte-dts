@@ -2,27 +2,26 @@ import { preprocess, compile as svelteCompile } from 'svelte/compiler';
 import { Plugin } from 'rollup';
 import path from 'path';
 import oldFs, { promises as fs } from 'fs';
-import Compile from './compile';
 import * as ts from 'typescript';
 import readdir from 'recursive-readdir';
+import Token from './token';
+import { Options } from './types';
 
-const execCompile = async (path: string, compile: Compile) => {
-  compile.exec();
-  await fs.appendFile(path, compile.toString());
-};
-
-export const svelteDts = (): Plugin => {
-  const compiles: Compile[] = [];
+export const svelteDts = (options: Options): Plugin => {
+  const tokens: Token[] = [];
   let packageJson: Record<string, any> = {};
   let dir: string;
   let main: string;
+  let output: string;
 
   return {
     name: 'svelte-dts',
-    async buildStart() {
+    async buildStart({ input }) {
       packageJson = JSON.parse(await fs.readFile(path.join(process.cwd(), 'package.json'), { encoding: 'utf-8' }));
-      main = path.join(process.cwd(), packageJson.main);
+
+      main = path.join(process.cwd(), input[0]);
       dir = path.dirname(main);
+      output = options.output || packageJson.types;
     },
     async generateBundle() {
       const files: string[] = await readdir(dir, ['node_modules']);
@@ -67,22 +66,20 @@ export const svelteDts = (): Plugin => {
               filename,
             });
 
-            compiles.push(
-              new Compile(scriptTsContent, filename, compiled.ast, dir, packageJson.name, main === filename)
-            );
+            tokens.push(new Token(scriptTsContent, filename, compiled.ast, dir, packageJson.name, main === filename));
           }
         }
       }
     },
     async writeBundle() {
-      const typesPath = path.join(process.cwd(), packageJson.types);
+      const typesPath = path.join(process.cwd(), output);
 
       if (oldFs.existsSync(typesPath)) {
         fs.unlink(typesPath);
       }
       fs.writeFile(typesPath, 'import { SvelteComponentTyped } from "svelte";\n\n');
 
-      await Promise.all(compiles.map((compile) => execCompile(typesPath, compile)));
+      await Promise.all(tokens.map((token) => token.appendFile(typesPath)));
     },
   };
 };

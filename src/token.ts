@@ -1,8 +1,10 @@
 import * as ts from 'typescript';
 import path from 'path';
+import { promises as fs } from 'fs';
 import { Ast, TemplateNode } from 'svelte/types/compiler/interfaces';
 import { Prop, Event, SlotProp } from './types';
-class Compile {
+
+class Token {
   fileName: string;
   sourceFile: ts.SourceFile;
   ast: Ast;
@@ -96,7 +98,7 @@ class Compile {
     });
   }
 
-  execSlotProperty(node: TemplateNode): void {
+  private execSlotProperty(node: TemplateNode): void {
     if (node.type === 'Slot' && node.attributes) {
       node.attributes.forEach((item) => this.slotProps.push({ name: item.name, type: 'any' }));
     }
@@ -120,11 +122,7 @@ class Compile {
     this.execSlotProperty(this.ast.html);
   }
 
-  print = () => {
-    console.log(this.events, this.props, this.slotProps);
-  };
-
-  toString() {
+  toString(): string {
     const componentName = path.basename(this.fileName).replace(path.extname(this.fileName), '');
     const propsString = this.props.reduce(
       (acc, prop) => `${acc}\n\t\t${prop.name}${prop.isOptional ? '?' : ''}: ${prop.type};`,
@@ -146,6 +144,11 @@ class Compile {
 
     return string;
   }
+
+  async appendFile(path: string): Promise<void> {
+    this.exec();
+    await fs.appendFile(path, this.toString());
+  }
 }
 
-export default Compile;
+export default Token;

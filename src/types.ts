@@ -1,3 +1,7 @@
+export type Options = {
+  output: string;
+};
+
 export type Prop = {
   name: string;
   type: string;
