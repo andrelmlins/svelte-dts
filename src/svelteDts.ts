@@ -4,11 +4,13 @@ import path from 'path';
 import oldFs, { promises as fs } from 'fs';
 import * as ts from 'typescript';
 import readdir from 'recursive-readdir';
-import Token from './token';
 import { Options } from './types';
+import SvelteTransformer from './transformer/svelte';
+import TypescriptTransformer from './transformer/typescript';
+import ITransform from './transformer/transformer';
 
 export const svelteDts = (options: Options): Plugin => {
-  const tokens: Token[] = [];
+  const transformers: ITransform[] = [];
   let packageJson: Record<string, any> = {};
   let dir: string;
   let main: string;
@@ -30,7 +32,7 @@ export const svelteDts = (options: Options): Plugin => {
         const filename = files[i];
         const extension = path.extname(filename);
 
-        if (['.svelte', '.ts'].includes(extension)) {
+        if (extension === '.svelte') {
           const fileContent = await fs.readFile(filename, { encoding: 'utf-8' });
 
           let scriptTsContent: string = '';
@@ -66,8 +68,12 @@ export const svelteDts = (options: Options): Plugin => {
               filename,
             });
 
-            tokens.push(new Token(scriptTsContent, filename, compiled.ast, dir, packageJson.name, main === filename));
+            transformers.push(
+              new SvelteTransformer(scriptTsContent, filename, compiled.ast, dir, packageJson.name, main === filename)
+            );
           }
+        } else if (extension === '.ts') {
+          transformers.push(new TypescriptTransformer(filename, dir, packageJson.name, main === filename));
         }
       }
     },
@@ -79,7 +85,7 @@ export const svelteDts = (options: Options): Plugin => {
       }
       fs.writeFile(typesPath, 'import { SvelteComponentTyped } from "svelte";\n\n');
 
-      await Promise.all(tokens.map((token) => token.appendFile(typesPath)));
+      await Promise.all(transformers.map((token) => token.appendFile(typesPath)));
     },
   };
 };
