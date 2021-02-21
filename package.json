@@ -2,7 +2,7 @@
   "name": "svelte-dts",
   "description": "Dts generator for svelte with typescript",
   "main": "dist/index.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "homepage": "https://github.com/andrelmlins/svelte-dts",
   "repository": "https://github.com/andrelmlins/svelte-dts",
