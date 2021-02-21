@@ -6,16 +6,16 @@ import { Prop, Event, SlotProp } from '../types';
 import ITransformer from './transformer';
 
 class SvelteTransformer implements ITransformer {
-  fileName: string;
-  sourceFile: ts.SourceFile;
-  ast: Ast;
-  props: Prop[];
-  slotProps: SlotProp[];
-  events: Event[];
-  dir: string;
-  subdir: string;
-  moduleName: string;
-  isDefault: boolean;
+  private fileName: string;
+  private sourceFile: ts.SourceFile;
+  private ast: Ast;
+  private props: Prop[];
+  private slotProps: SlotProp[];
+  private events: Event[];
+  private dir: string;
+  private subdir: string;
+  private moduleName: string;
+  private isDefault: boolean;
 
   constructor(content: string, fileName: string, ast: Ast, dir: string, moduleName: string, isDefault: boolean) {
     this.sourceFile = ts.createSourceFile(fileName, content, ts.ScriptTarget.Latest);

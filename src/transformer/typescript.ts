@@ -4,12 +4,12 @@ import { promises as fs } from 'fs';
 import ITransformer from './transformer';
 
 class TypescriptTransformer implements ITransformer {
-  fileName: string;
-  dir: string;
-  subdir: string;
-  moduleName: string;
-  isDefault: boolean;
-  declaration: string;
+  private fileName: string;
+  private dir: string;
+  private subdir: string;
+  private moduleName: string;
+  private isDefault: boolean;
+  private declaration: string;
 
   constructor(fileName: string, dir: string, moduleName: string, isDefault: boolean) {
     this.fileName = fileName;
