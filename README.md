@@ -35,6 +35,25 @@ export default [
 ];
 ```
 
+### Options
+
+| Option | Type   | Description     |
+| ------ | ------ | --------------- |
+| output | string | App output file |
+
+## Using with cli
+
+```sh
+svelte-dts -i src/index.ts -o dist/index.d.ts
+```
+
+### Options
+
+| Option                         | Alias           | Description     |
+| ------------------------------ | --------------- | --------------- |
+| <code>--input [input]</code>   | <code>-i</code> | App input file  |
+| <code>--output [output]</code> | <code>-o</code> | App output file |
+
 ## NPM Statistics
 
 Download stats for this NPM package
