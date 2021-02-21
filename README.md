@@ -2,13 +2,59 @@
 
 [![npm version](https://badge.fury.io/js/svelte-dts.svg)](https://www.npmjs.com/package/svelte-dts) &bull; [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/andrelmlins/svelte-dts/blob/master/LICENSE) &bull; [![Node.js CI](https://github.com/andrelmlins/svelte-dts/workflows/Node.js%20CI/badge.svg)](https://github.com/andrelmlins/svelte-dts/actions?query=workflow%3A%22Node.js+CI%22)
 
-Typescript declaration generator for svelte with typescript. These are the main characteristics of this library:
+Typescript declaration generator for svelte with typescript. Create the declaration files for your library and project. These are the main characteristics of this library:
 
 ✨ CLI(Command-line interface)
 <br />
 ✨ Rollup plugin
 <br />
 ✨ Transpile typescript in the svelte file
+
+## How it works?
+
+The `svelte-dts` interpret the properties, events and slot properties in the svelte code, using typescript and svelte compiler. The `svelte-dts` too interpret typescript and declaration typescript code, and create default declarations for javascript code.
+
+Observe the code of the `click-counter-clicked` library that has the `ClickCounterButton` component, and next to the generated typescript declarations.
+
+<table>
+<tr>
+<td>
+
+```html
+<script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+
+export let initialNumber: number = 0;
+
+let dispatch = createEventDispatcher<{ change: number }>();
+let number = initialNumber;
+
+$: dispatch('change', number);
+</script>
+
+<button on:click={() => (number += 1)}>Cliques: {number}</button>
+
+```
+
+</td>
+<td>
+
+```ts
+import { SvelteComponentTyped } from 'svelte';
+
+declare module 'click-counter-button' {
+  interface ClickCounterButtonProps {
+    initialNumber: number;
+  }
+
+  class ClickCounterButton extends SvelteComponentTyped<ClickCounterButtonProps, { change: CustomEvent<number> }, {}> {}
+
+  export default ClickCounterButton;
+}
+```
+
+</td>
+</tr>
 
 ## Installation
 
