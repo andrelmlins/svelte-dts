@@ -12,7 +12,7 @@
     "types": "npm-dts generate -o ./dist/index.d.ts -L error"
   },
   "bin": {
-    "whatsup": "./bin/svelte-dts"
+    "svelte-dts": "./bin/svelte-dts"
   },
   "files": [
     "dist",
