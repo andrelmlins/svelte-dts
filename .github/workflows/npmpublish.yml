@@ -17,6 +17,8 @@ jobs:
         run: npm install --frozen-lockfile
       - name: Build
         run: npm run build
+      - name: Generate types
+        run: npm run types
       - name: Npm publish
         run: npm publish --access public
         env:
