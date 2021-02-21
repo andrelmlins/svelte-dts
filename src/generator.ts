@@ -6,6 +6,7 @@ import path from 'path';
 import { Options } from './types';
 import SvelteTransformer from './transformer/svelte';
 import TypescriptTransformer from './transformer/typescript';
+import JavascriptTransformer from './transformer/javascript';
 import ITransform from './transformer/transformer';
 
 class Generator {
@@ -30,7 +31,12 @@ class Generator {
 
     for (let i = 0; i < files.length; i++) {
       const filename = files[i];
+      const pathParser = path.parse(filename);
       const extension = path.extname(filename);
+
+      if (pathParser.base.includes('.test') || pathParser.base.includes('.spec')) {
+        continue;
+      }
 
       if (extension === '.svelte') {
         const fileContent = await fs.readFile(filename, { encoding: 'utf-8' });
@@ -82,6 +88,10 @@ class Generator {
       } else if (extension === '.ts') {
         this.transformers.push(
           new TypescriptTransformer(filename, this.dir, this.packageJson.name, this.input === filename)
+        );
+      } else if (extension === '.js') {
+        this.transformers.push(
+          new JavascriptTransformer(filename, this.dir, this.packageJson.name, this.input === filename)
         );
       }
     }
