@@ -8,28 +8,27 @@ Typescript declaration generator for svelte with typescript. Create the declarat
 <br />
 ✨ Rollup plugin
 <br />
-✨ Transpile typescript in the svelte file
+✨ Svelte and typescript files
 
 ## How it works?
 
 The `svelte-dts` interpret the properties, events and slot properties in the svelte code, using typescript and svelte compiler. The `svelte-dts` too interpret typescript and declaration typescript code, and create default declarations for javascript code.
 
-Observe the code of the `click-counter-clicked` library that has the `ClickCounterButton` component:
+Observe the code of the `click-counter-button` library that has the `ClickCounterButton` component:
 
 ```html
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
-export let initialNumber: number = 0;
+  export let initialNumber: number = 0;
 
-let dispatch = createEventDispatcher<{ change: number }>();
-let number = initialNumber;
+  let dispatch = createEventDispatcher<{ change: number }>();
+  let number = initialNumber;
 
-$: dispatch('change', number);
+  $: dispatch('change', number);
 </script>
 
 <button on:click={() => (number += 1)}>Cliques: {number}</button>
-
 ```
 
 The result is the generated typescript declarations. Please note below:
