@@ -1,5 +1,6 @@
 export type Options = {
   output: string;
+  extensions?: string[];
 };
 
 export type Prop = {

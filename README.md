@@ -74,9 +74,10 @@ export default [
 
 ### Options
 
-| Option | Type   | Description     |
-| ------ | ------ | --------------- |
-| output | string | App output file |
+| Option       | Type       | Description              | Default                  |
+| ------------ | ---------- | ------------------------ | ------------------------ |
+| `output`     | `string`   | Declarations output file | The value of `pkg.types` |
+| `extensions` | `string[]` | Valid Extensions         | .svelte, .ts, .js        |
 
 ## Using with cli
 
@@ -86,10 +87,11 @@ svelte-dts -i src/index.ts -o dist/index.d.ts
 
 ### Options
 
-| Option                         | Alias           | Description     |
-| ------------------------------ | --------------- | --------------- |
-| <code>--input [input]</code>   | <code>-i</code> | App input file  |
-| <code>--output [output]</code> | <code>-o</code> | App output file |
+| Option                                 | Alias           | Description              |
+| -------------------------------------- | --------------- | ------------------------ |
+| <code>--input [input]</code>           | <code>-i</code> | App input file           |
+| <code>--output [output]</code>         | <code>-o</code> | Declarations output file |
+| <code>--extensions [extensions]</code> | <code>-e</code> | Valid Extensions         |
 
 ## NPM Statistics
 

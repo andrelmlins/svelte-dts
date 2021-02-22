@@ -11,13 +11,14 @@ const exec = async (): Promise<void> => {
     .name(`svelte-dts`)
     .version(packageJson.version, '-v --version', 'Version number')
     .helpOption('-h --help', 'For more information')
-    .requiredOption('-i, --input <input>', 'dts input')
-    .requiredOption('-o, --output <output>', 'dts output')
+    .requiredOption('-i, --input <input>', 'input of application')
+    .requiredOption('-o, --output <output>', 'output of declarations')
+    .option('-e, --extensions <extensions...>', 'valid extensions')
     .parse(process.argv);
 
   const options = program.opts();
 
-  const generator = new Generator(options.input, { output: options.output });
+  const generator = new Generator(options.input, { output: options.output, extensions: options.extensions });
   await generator.read();
   await generator.write();
 };
