@@ -39,6 +39,7 @@ class TypescriptTransformer implements ITransformer {
     }
 
     string += this.declaration
+      .replace(/declare /g, '')
       .split('\n')
       .map((item) => (item !== '' ? `\t${item}` : undefined))
       .filter((item) => !!item)
