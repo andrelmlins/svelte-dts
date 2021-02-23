@@ -104,9 +104,9 @@ class Generator {
     const typesPath = path.join(process.cwd(), this.output);
 
     if (oldFs.existsSync(typesPath)) {
-      fs.unlink(typesPath);
+      await fs.unlink(typesPath);
     }
-    fs.writeFile(typesPath, 'import { SvelteComponentTyped } from "svelte";\n\n');
+    await fs.writeFile(typesPath, 'import { SvelteComponentTyped } from "svelte";\n\n');
 
     await Promise.all(this.transformers.map((token) => token.appendFile(typesPath)));
   }

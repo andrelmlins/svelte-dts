@@ -101,6 +101,10 @@ class SvelteTransformer implements ITransformer {
                 const name = member.name.getText(this.sourceFile);
                 const type = member.type?.getText(this.sourceFile) || 'any';
 
+                if (member.type && ts.isTypeReferenceNode(member.type)) {
+                  this.typesForSearch.push(member.type);
+                }
+
                 this.events.push({ name, type });
               }
             });
