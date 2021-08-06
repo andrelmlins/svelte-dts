@@ -19,7 +19,7 @@ class Generator {
 
   constructor(input: string, options: Options) {
     this.packageJson = require(path.join(process.cwd(), 'package.json'));
-    this.input = path.join(process.cwd(), input);
+    this.input = path.isAbsolute(input) ? input : path.join(process.cwd(), input);
     this.dir = path.dirname(this.input);
     this.output = options.output || this.packageJson.types;
     this.extensions = options.extensions || ['.svelte', '.ts', '.js'];
