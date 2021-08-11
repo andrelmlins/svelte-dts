@@ -55,6 +55,16 @@ class SvelteTransformer implements ITransformer {
     );
   }
 
+  private addTypeForSearch(newType: ts.TypeReferenceNode): void {
+    const includeType = this.typesForSearch.map(
+      (item) => item.getText(this.sourceFile) === newType.getText(this.sourceFile)
+    );
+
+    if (!includeType) {
+      this.typesForSearch.push(newType);
+    }
+  }
+
   private compileProperty(node: ts.VariableStatement): void {
     node.declarationList.declarations.forEach((declaration) => {
       const name = declaration.name.getText(this.sourceFile);
@@ -66,7 +76,7 @@ class SvelteTransformer implements ITransformer {
         type = declaration.type.getText(this.sourceFile);
 
         if (ts.isTypeReferenceNode(declaration.type)) {
-          this.typesForSearch.push(declaration.type);
+          this.addTypeForSearch(declaration.type);
         }
 
         if (ts.isUnionTypeNode(declaration.type)) {
@@ -102,7 +112,7 @@ class SvelteTransformer implements ITransformer {
                 const type = member.type?.getText(this.sourceFile) || 'any';
 
                 if (member.type && ts.isTypeReferenceNode(member.type)) {
-                  this.typesForSearch.push(member.type);
+                  this.addTypeForSearch(member.type);
                 }
 
                 this.events.push({ name, type });
