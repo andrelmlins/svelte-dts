@@ -60,7 +60,7 @@ class SvelteTransformer implements ITransformer {
       (item) => item.getText(this.sourceFile) === newType.getText(this.sourceFile)
     );
 
-    if (!includeType) {
+    if (!includeType || this.typesForSearch.length === 0) {
       this.typesForSearch.push(newType);
     }
   }
