@@ -3,7 +3,7 @@
   "description": "Typescript declaration generator for svelte with typescript",
   "main": "dist/index.js",
   "types": "dist/index.ts",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "license": "MIT",
   "homepage": "https://github.com/andrelmlins/svelte-dts",
   "repository": "https://github.com/andrelmlins/svelte-dts",

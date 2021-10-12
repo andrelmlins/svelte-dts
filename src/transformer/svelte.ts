@@ -81,7 +81,12 @@ class SvelteTransformer implements ITransformer {
 
         if (ts.isUnionTypeNode(declaration.type)) {
           const nameValidTypes = declaration.type.types.reduce((acc, type) => {
-            if (type.kind === ts.SyntaxKind.NullKeyword || type.kind === ts.SyntaxKind.UndefinedKeyword) {
+            const typeForCheck = ts.isLiteralTypeNode(type) ? type.literal : type;
+
+            if (
+              typeForCheck.kind === ts.SyntaxKind.NullKeyword ||
+              typeForCheck.kind === ts.SyntaxKind.UndefinedKeyword
+            ) {
               isOptional = true;
               return acc;
             }
