@@ -230,9 +230,9 @@ class SvelteTransformer implements ITransformer {
     }
 
     string += `\tinterface ${pathParse.name}Props {${propsString}\n\t}\n\n`;
-    string += `\tclass ${pathParse.name} extends SvelteComponentTyped<\n`;
+    string += `\texport default class ${pathParse.name} extends SvelteComponentTyped<\n`;
     string += `\t\t${pathParse.name}Props,\n\t\t{ ${eventsString} },\n\t\t{ ${slotPropsString} }\n\t> {}`;
-    string += `\n\n\texport default ${pathParse.name};\n}\n\n`;
+    string += `\n}\n\n`;
 
     return string;
   }
